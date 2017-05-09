@@ -1,10 +1,29 @@
 os:
   - linux
+
 language: generic
+
 sudo: required
+
+services:
+  - docker
+
 dist: trusty
+
 osx_image: xcode8.3
+
+# Setup swift
 install:
   - eval "$(curl -sL https://gist.githubusercontent.com/SanjoDeundiak/f84879af33a270119711bfa333704359/raw/62f380d75821805c617fb09038ff4aae0a9f6d3d/install_swift_linux.sh)"
+
+# Build
 script:
   - swift build -c release
+
+# Build image and push to docker hub
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker build -t wardrobe .
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      docker push sanjodeundiak/wardrobe
+    fi
