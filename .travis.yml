@@ -23,7 +23,7 @@ script:
 # Build image and push to docker hub
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-      docker build -t wardrobe:latest .;
+      docker build -t wardrobe .;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push sanjodeundiak/wardrobe;
     fi
