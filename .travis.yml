@@ -25,5 +25,5 @@ after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker build -t wardrobe:latest .;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-      docker push sanjodeundiak/wardrobe:latest;
+      docker push sanjodeundiak/wardrobe;
     fi
