@@ -8,7 +8,7 @@ WORKDIR /app
 ADD . /app
 
 # Build app
-RUN ["vapor", "build --clean --verbose"]
+RUN ["vapor", "build", "--verbose"]
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
