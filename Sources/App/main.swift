@@ -8,6 +8,9 @@ drop.get { req in
     ])
 }
 
+let fbAuthController = FacebookAuthController()
+drop.post("/login/facebook/", handler: fbAuthController.login)
+
 drop.resource("posts", PostController())
 
 drop.run()
