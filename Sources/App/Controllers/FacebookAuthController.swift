@@ -12,9 +12,24 @@ import HTTP
 
 final class FacebookAuthController {
     func login(_ req: Request) throws -> ResponseRepresentable {
-//        guard let name = req.data["name"] else {
-//            throw Abort.badRequest
-//        }
-        return "Hello"
+        guard let id = req.data["id"]?.string else {
+            throw Abort.badRequest
+        }
+        
+        if case let user?? = try? User.query().filter(User.Keys.id.rawValue, id).first() {
+            return user
+        }
+        else {
+            var user = User(facebookAuthInfo: FacebookAuthInfo(id: id, accessToken: "someToken"))
+        
+            do {
+                try user.save()
+            }
+            catch {
+                throw Abort.serverError
+            }
+            
+            return user
+        }
     }
 }

@@ -11,7 +11,7 @@ import Fluent
 import Foundation
 
 final class FacebookAuthInfo: NodeConvertible {
-    private enum Keys: String {
+    enum Keys: String {
         case id = "id"
         case accessToken = "access_token"
     }

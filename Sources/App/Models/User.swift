@@ -11,13 +11,15 @@ import Fluent
 import Foundation
 
 final class User: Model {
-    private enum Keys: String {
+    enum Keys: String {
         case id = "id"
         case facebookAuthInfo = "fb_auth"
     }
     
     var id: Node?
     var facebookAuthInfo: FacebookAuthInfo
+    
+    var exists: Bool = false
     
     init(facebookAuthInfo: FacebookAuthInfo) {
         self.id = UUID().uuidString.makeNode()

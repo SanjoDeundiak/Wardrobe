@@ -1,4 +1,5 @@
 import Vapor
+import Fluent
 
 let drop = Droplet()
 
@@ -7,6 +8,10 @@ drop.get { req in
     	"message": drop.localization[req.lang, "welcome", "title"]
     ])
 }
+
+let db = Database(MemoryDriver())
+
+User.database = db
 
 let fbAuthController = FacebookAuthController()
 drop.post("/login/facebook/", handler: fbAuthController.login)
