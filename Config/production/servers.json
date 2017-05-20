@@ -10,8 +10,8 @@
         "securityLayer": "tls",
         "tls": {
             "certificates": "files",
-            "certificateFile": "/tls/cert.pem",
-            "privateKeyFile": "/tls/privkey.pem"
+            "certificateFile": "/tls/live/wardrobe.ml/cert.pem",
+            "privateKeyFile": "/tls/live/wardrobe.ml/privkey.pem"
         }
     }
 }
