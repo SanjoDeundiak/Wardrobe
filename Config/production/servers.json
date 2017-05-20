@@ -3,5 +3,15 @@
 		"port": "8080",
 		"host": "0.0.0.0",
 		"securityLayer": "none"
-	}
+	},
+    "secure": {
+        "port": "8081",
+        "host": "0.0.0.0",
+        "securityLayer": "tls",
+        "tls": {
+            "certificates": "files",
+            "certificateFile": "/tls/live/wardrobe.ml/cert.pem",
+            "privateKeyFile": "/tls/live/wardrobe.ml/privkey.pem"
+        }
+    }
 }

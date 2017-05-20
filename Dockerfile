@@ -12,8 +12,8 @@ RUN ["vapor", "build", "--verbose"]
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
-# Make port 8080 available to the world outside this container
-EXPOSE 8081 // for tls
+# Make port 8081 available to the world outside this container
+EXPOSE 8081
 
 # Define environment variable
 ENV NAME World
