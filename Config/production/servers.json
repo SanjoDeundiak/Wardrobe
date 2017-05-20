@@ -10,8 +10,8 @@
         "securityLayer": "tls",
         "tls": {
             "certificates": "files",
-            "certificateFile": "/tls/",
-            "privateKeyFile": "$TLS_KEY_PATH"
+            "certificateFile": "/tls/cert.pem",
+            "privateKeyFile": "/tls/privkey.pem"
         }
     }
 }
