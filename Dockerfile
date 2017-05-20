@@ -17,4 +17,4 @@ EXPOSE 8080
 ENV NAME World
 
 # Run app when the container launches
-CMD ["vapor", "run"]
+CMD ["vapor", "run", "--env=production"]
