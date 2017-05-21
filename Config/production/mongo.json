@@ -1,0 +1,7 @@
+{
+    "user": "",
+    "password": "",
+    "database": "local",
+    "port": "27017",
+    "host": "wardrobe-mongo"
+}

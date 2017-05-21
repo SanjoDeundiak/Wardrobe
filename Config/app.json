@@ -1,3 +1,4 @@
 {
-	"foo": "foo-bar"
+    "facebookClientID": "$FACEBOOK_CLIENT_ID",
+    "facebookClientSecret": "$FACEBOOK_CLIENT_SECRET"
 }
