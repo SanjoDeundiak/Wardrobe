@@ -11,7 +11,7 @@ let drop = Droplet()
 // setup mongo
 try drop.addProvider(VaporMongo.Provider.self)
 guard let mongoProvider = drop.providers.last as? VaporMongo.Provider else {
-    throw Abort.serverError
+    throw Abort.custom(status: Status.internalServerError, message: "Mongo error")
 }
 
 // setup db for Fluent
@@ -23,7 +23,7 @@ drop.middleware.append(AuthMiddleware<User>())
 
 guard let clientID = drop.config["app", "facebookClientID"]?.string,
     let clientSecret = drop.config["app", "facebookClientSecret"]?.string else {
-    throw Abort.serverError
+    throw Abort.custom(status: Status.notFound, message: "Fb credentials not found error")
 }
 
 let fb = Facebook(clientID: clientID, clientSecret: clientSecret)
