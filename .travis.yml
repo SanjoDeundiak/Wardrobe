@@ -23,6 +23,8 @@ script:
 # Build image and push to docker hub
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      npm install;
+      ./ts_compile.sh;
       docker build -t "$DOCKER_USERNAME"/wardrobe .;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker push sanjodeundiak/wardrobe;
