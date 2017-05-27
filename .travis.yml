@@ -1,7 +1,7 @@
 os:
   - linux
 
-language: node_js
+language: generic
 
 sudo: required
 
@@ -23,6 +23,9 @@ script:
 # Build image and push to docker hub
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      sudo apt-get install nodejs;
+      sudo apt-get install npm;
+      sudo ln -s /usr/bin/nodejs /usr/bin/node
       npm install -g typescript;
       npm install;
       ./ts_compile.sh;
