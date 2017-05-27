@@ -1,7 +1,7 @@
 os:
   - linux
 
-language: generic
+language: node_js
 
 sudo: required
 
