@@ -3,3 +3,7 @@ Packages
 xcuserdata
 *.xcodeproj
 Config/secrets
+
+// Compiled typescript
+Public/src/
+node_modules/
