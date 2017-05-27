@@ -18,40 +18,51 @@ guard let mongoProvider = drop.providers.last as? VaporMongo.Provider else {
 let db = Database(mongoProvider.driver)
 User.database = db
 
-// setup fb
+// add authentication
 drop.middleware.append(AuthMiddleware<User>())
 
+// setup fb
 guard let clientID = drop.config["app", "facebookClientID"]?.string,
     let clientSecret = drop.config["app", "facebookClientSecret"]?.string else {
     throw Abort.custom(status: Status.notFound, message: "Fb credentials not found error")
 }
 
-let fb = Facebook(clientID: clientID, clientSecret: clientSecret)
+SharedFB.initialize(fb: Facebook(clientID: clientID, clientSecret: clientSecret))
 
-drop.get("login", "facebook") { request in
-    let state = URandom().secureToken
-    let response = Response(redirect: fb.getLoginLink(redirectURL: request.baseURL + "/login/facebook/consumer", state: state).absoluteString)
-    response.cookies["OAuthState"] = state
-    return response
-}
+let fb = SharedFB.fb
 
-drop.get("login", "facebook", "consumer") { request in
-    guard let state = request.cookies["OAuthState"] else {
-        return Response(redirect: "/login")
-    }
-    guard case let account?? = try? fb.authenticate(authorizationCodeCallbackURL: request.uri.description, state: state) as? FacebookAccount else {
+let restBase = "rest"
+
+// authentication
+drop.post(restBase, "authenticate", "facebook") { request in
+    guard let fbToken = request.json?["access_token"]?.string else {
         throw Abort.badRequest
     }
     
-    do {
-        try request.auth.login(account)
-    }
-    catch {
-//        request.auth.
-        throw Abort.serverError
-    }
-    return Response(redirect: "/")
+    let fbCredentials = AccessToken(string: fbToken)
+    
+    try request.auth.login(fbCredentials)
+    
+    return Response()
 }
+
+//drop.get("login", "facebook", "consumer") { request in
+//    guard let state = request.cookies["OAuthState"] else {
+//        return Response(redirect: "/login")
+//    }
+//    guard case let account?? = try? fb.authenticate(authorizationCodeCallbackURL: request.uri.description, state: state) as? FacebookAccount else {
+//        throw Abort.badRequest
+//    }
+//    
+//    do {
+//        try request.auth.login(account)
+//    }
+//    catch {
+////        request.auth.
+//        throw Abort.serverError
+//    }
+//    return Response(redirect: "/")
+//}
 
 // Starting page
 drop.get { req in

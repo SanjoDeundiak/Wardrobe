@@ -11,6 +11,7 @@ import Fluent
 import Foundation
 import TurnstileWeb
 import Auth
+import HTTP
 
 final class User: Model {
     enum Keys: String {
@@ -57,25 +58,27 @@ extension User: Auth.User {
     
     static func authenticate(credentials: Credentials) throws -> Auth.User {
         switch credentials {
+        // When user logged in previously and we have cookie
         case let credentials as Identifier:
             if case let user?? = try? User.find(credentials.id) {
                 return user
             }
             
             throw Abort.badRequest
-        
+        // For the first login during session
         case let credentials as FacebookAccount:
             if let user = try User.query().filter(User.Keys.facebookId.rawValue, credentials.uniqueID).first() {
+                _ = try SharedFB.fb.authenticate(credentials: credentials)
                 return user
             } else {
                 guard let user = try User.register(credentials: credentials) as? User else {
                     throw Abort.serverError
                 }
-                
+
                 return user
             }
         default:
-            throw Abort.badRequest
+            throw Abort.custom(status: .forbidden, message: "Unsupported credentials")
         }
     }
     
@@ -96,5 +99,15 @@ extension User: Auth.User {
         default:
             throw Abort.badRequest
         }
+    }
+}
+
+extension Request {
+    func user() throws -> User {
+        guard let user = try auth.user() as? User else {
+            throw Abort.custom(status: .badRequest, message: "Invalid user type.")
+        }
+        
+        return user
     }
 }
