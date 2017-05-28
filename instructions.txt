@@ -1,0 +1,24 @@
+[ https://nodejs.org/ ] - установка Node.js
+> npm install -g typescript
+[ https://www.sublimetext.com ] - установка редактора
+[ https://packagecontrol.io/installation ] - менеджер пакетов для редактора
+[ https://packagecontrol.io/packages/TypeScript ] - пакет для подсветки синтаксиса [ https://git-scm.com/ ]
+
+Установить git
+
+# Install swift
+> eval "$(curl -sL https://gist.githubusercontent.com/SanjoDeundiak/f84879af33a270119711bfa333704359/raw/62f380d75821805c617fb09038ff4aae0a9f6d3d/install_swift_linux.sh)"
+
+# start mongo on port 32769
+> docker run --name wardrobe-mongo -p 32769:27017 -d mongo
+
+> git clone https://github.com/SanjoDeundiak/Wardrobe.git
+> cd Wardrobe
+> npm install
+
+> vapor build --verbose
+> vapor run --env=production
+
+> ./ts_compile.sh
+
+Go to localhost:8080
