@@ -1,1 +1,1 @@
-tsc -p Typescript/ --outDir Public/src
+tsc -p Typescript/ --outDir Public
