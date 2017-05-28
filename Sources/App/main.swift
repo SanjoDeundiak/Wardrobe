@@ -46,24 +46,6 @@ drop.post(restBase, "authenticate", "facebook") { request in
     return Response()
 }
 
-//drop.get("login", "facebook", "consumer") { request in
-//    guard let state = request.cookies["OAuthState"] else {
-//        return Response(redirect: "/login")
-//    }
-//    guard case let account?? = try? fb.authenticate(authorizationCodeCallbackURL: request.uri.description, state: state) as? FacebookAccount else {
-//        throw Abort.badRequest
-//    }
-//    
-//    do {
-//        try request.auth.login(account)
-//    }
-//    catch {
-////        request.auth.
-//        throw Abort.serverError
-//    }
-//    return Response(redirect: "/")
-//}
-
 // Starting page
 drop.get { req in
     return try drop.view.make("welcome", [
@@ -73,7 +55,5 @@ drop.get { req in
 
 // Users controller
 drop.resource("users", UserController())
-
-//drop.resource("posts", PostController())
 
 drop.run()

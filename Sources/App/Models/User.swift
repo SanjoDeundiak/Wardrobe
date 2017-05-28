@@ -17,10 +17,12 @@ final class User: Model {
     enum Keys: String {
         case id = "_id"
         case facebookId = "fb_id"
+        case isAdmin = "is_admin"
     }
     
     var id: Node?
     var fbId: String
+    var isAdmin: Bool
     
     var exists: Bool = false
     
@@ -28,17 +30,20 @@ final class User: Model {
         // FIXME
         self.id = UUID().uuidString.makeNode()
         self.fbId = credentials.uniqueID
+        self.isAdmin = false
     }
     
     init(node: Node, in context: Context) throws {
         self.id = try node.extract(Keys.id.rawValue)
         self.fbId = try node.extract(Keys.facebookId.rawValue)
+        self.isAdmin = (try? node.extract(Keys.isAdmin.rawValue)) ?? false
     }
     
     func makeNode(context: Context) throws -> Node {
         return try Node(node: [
             Keys.id.rawValue: self.id,
-            Keys.facebookId.rawValue: self.fbId
+            Keys.facebookId.rawValue: self.fbId,
+            Keys.isAdmin.rawValue: self.isAdmin
             ])
     }
 }
