@@ -10,7 +10,8 @@ services:
 
 dist: trusty
 
-osx_image: xcode8.3
+before_install:
+  - set -o pipefail
 
 # Setup swift
 install:
@@ -23,11 +24,17 @@ script:
 # Build image and push to docker hub
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -;
       sudo apt-get install nodejs;
       sudo apt-get install npm;
       sudo ln -s /usr/bin/nodejs /usr/bin/node;
       sudo npm install -g typescript;
       npm install;
+
+      node -v;
+      npm -v;
+      tsc -v;
+
       ./ts_compile.sh;
       docker build -t "$DOCKER_USERNAME"/wardrobe .;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
