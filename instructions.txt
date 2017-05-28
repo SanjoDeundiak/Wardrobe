@@ -9,6 +9,8 @@
 # Install swift
 > eval "$(curl -sL https://gist.githubusercontent.com/SanjoDeundiak/f84879af33a270119711bfa333704359/raw/62f380d75821805c617fb09038ff4aae0a9f6d3d/install_swift_linux.sh)"
 
+# install docker
+https://www.docker.com/
 # start mongo on port 32769
 > docker run --name wardrobe-mongo -p 32769:27017 -d mongo
 
