@@ -29,12 +29,7 @@ after_success:
       sudo apt-get install npm;
       sudo ln -s /usr/bin/nodejs /usr/bin/node;
       sudo npm install -g typescript;
-      npm install;
-
-      node -v;
-      npm -v;
-      tsc -v;
-
+      cd Public; npm install; cd ..;
       ./ts_compile.sh;
       docker build -t "$DOCKER_USERNAME"/wardrobe .;
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
