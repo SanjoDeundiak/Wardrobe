@@ -8,6 +8,8 @@ import Auth
 
 let drop = Droplet()
 
+HTTP.defaultServerTimeout = 60 * 60
+
 // setup mongo
 try drop.addProvider(VaporMongo.Provider.self)
 guard let mongoProvider = drop.providers.last as? VaporMongo.Provider else {
