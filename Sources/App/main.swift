@@ -33,10 +33,8 @@ SharedFB.initialize(fb: Facebook(clientID: clientID, clientSecret: clientSecret)
 
 let fb = SharedFB.fb
 
-let restBase = "rest"
-
 // authentication
-drop.post(restBase, "authenticate", "facebook") { request in
+drop.post("authenticate", "facebook") { request in
     guard let fbToken = request.json?["access_token"]?.string else {
         throw Abort.badRequest
     }
@@ -45,7 +43,7 @@ drop.post(restBase, "authenticate", "facebook") { request in
     
     try request.auth.login(fbCredentials)
     
-    return Response()
+    return try request.user()
 }
 
 // Starting page

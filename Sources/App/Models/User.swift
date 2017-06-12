@@ -70,10 +70,15 @@ extension User: Auth.User {
             }
             
             throw Abort.badRequest
+            
+        case let credentials as AccessToken:
+            let account = try SharedFB.fb.authenticate(credentials: credentials)
+            return try self.authenticate(credentials: account)
+            
         // For the first login during session
         case let credentials as FacebookAccount:
-            if let user = try User.query().filter(User.Keys.facebookId.rawValue, credentials.uniqueID).first() {
-                _ = try SharedFB.fb.authenticate(credentials: credentials)
+            if case let user?? = try? User.query().filter(User.Keys.facebookId.rawValue, credentials.uniqueID).first() {
+                _ = try SharedFB.fb.authenticate(credentials: credentials.accessToken)
                 return user
             } else {
                 guard let user = try User.register(credentials: credentials) as? User else {
