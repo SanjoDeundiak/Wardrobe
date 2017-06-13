@@ -13,10 +13,6 @@ dist: trusty
 before_install:
   - set -o pipefail
 
-# Setup swift
-install:
-  - eval "$(curl -sL https://gist.githubusercontent.com/SanjoDeundiak/f84879af33a270119711bfa333704359/raw/62f380d75821805c617fb09038ff4aae0a9f6d3d/install_swift_linux.sh)"
-
 # Build
 script:
   - docker build -t "$DOCKER_USERNAME"/wardrobe .
