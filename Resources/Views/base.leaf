@@ -1,52 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- FB JS START -->
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId            : '114249775821729',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v2.9'
-      });
-      FB.AppEvents.logPageView();
-
-      FbOnInit();
-    };
-
-    function FbOnInit() {
-      FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-          console.log('Logged in.');
-        }
-        else {
-          FB.login();
-        }
-      });
-    }
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_GB/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
-  <!-- FB JAS END -->
-
-<!-- Polyfill(s) for older browsers -->
-<script src="node_modules/core-js/client/shim.min.js"></script>
-
-<script src="node_modules/zone.js/dist/zone.js"></script>
-<script src="node_modules/systemjs/dist/system.src.js"></script>
-
-    <script src="systemjs.config.js"></script>
-    <script>
-        System.import('main.js').catch(function(err){ console.error(err); });
-    </script>
-
   #import("head")
 </head>
   <body>

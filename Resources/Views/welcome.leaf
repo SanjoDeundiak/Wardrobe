@@ -26,19 +26,4 @@
       <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
     </h2>
   </div>
-
-  <script>
-    function checkLoginState() {
-      FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-          console.log('Logged in.');
-        }
-        else {
-          FB.login();
-        }
-      });
-    }
-    </script>
-
-    <my-app>Loading AppComponent content here ...</my-app>
 }
