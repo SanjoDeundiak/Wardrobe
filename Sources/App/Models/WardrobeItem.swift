@@ -14,29 +14,34 @@ final class WardrobeItem: Model {
     enum Keys: String {
         case id = "_id"
         case userId = "user_id"
-        case category = "category"
+        case itemType = "item_type"
         case color = "color"
     }
     
     var id: Node?
     var userId: Node
-    var category: String
+    var itemType: ItemType
     var color: String
     
     var exists: Bool = false
     
-    init(userId: Node, category: String, color: String) {
+    init(userId: Node, itemType: ItemType, color: String) {
         // FIXME
         self.id = UUID().uuidString.makeNode()
         self.userId = userId
-        self.category = category
+        self.itemType = itemType
         self.color = color
     }
     
     init(node: Node, in context: Context) throws {
         self.id = try node.extract(Keys.id.rawValue)
         self.userId = try node.extract(Keys.userId.rawValue)
-        self.category = try node.extract(Keys.category.rawValue)
+        let itemTypeStr: String = try node.extract(Keys.itemType.rawValue)
+        guard let itemType = ItemType(rawValue: itemTypeStr) else {
+            throw Abort.serverError
+        }
+        
+        self.itemType = itemType
         self.color = try node.extract(Keys.color.rawValue)
     }
     
@@ -44,7 +49,7 @@ final class WardrobeItem: Model {
         return try Node(node: [
             Keys.id.rawValue: self.id,
             Keys.userId.rawValue: self.userId,
-            Keys.category.rawValue: self.category,
+            Keys.itemType.rawValue: self.itemType.rawValue,
             Keys.color.rawValue: self.color
             ])
     }
@@ -53,7 +58,7 @@ final class WardrobeItem: Model {
         let children = user.children(Keys.userId.rawValue, WardrobeItem.self)
         
         if let category = category {
-            return try children.filter(Keys.category.rawValue, category).all()
+            return try children.filter(Keys.itemType.rawValue, category).all()
         }
         else {
             return try children.all()
