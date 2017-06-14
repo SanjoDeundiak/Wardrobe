@@ -14,6 +14,7 @@ final class WardrobeItem: Model {
     enum Keys: String {
         case id = "_id"
         case userId = "user_id"
+        case category = "category"
         case itemType = "item_type"
         case color = "color"
     }
@@ -50,6 +51,7 @@ final class WardrobeItem: Model {
             Keys.id.rawValue: self.id,
             Keys.userId.rawValue: self.userId,
             Keys.itemType.rawValue: self.itemType.rawValue,
+            Keys.category.rawValue: self.itemType.category.rawValue,
             Keys.color.rawValue: self.color
             ])
     }
@@ -58,7 +60,7 @@ final class WardrobeItem: Model {
         let children = user.children(Keys.userId.rawValue, WardrobeItem.self)
         
         if let category = category {
-            return try children.filter(Keys.itemType.rawValue, category).all()
+            return try children.filter(Keys.category.rawValue, category).all()
         }
         else {
             return try children.all()
