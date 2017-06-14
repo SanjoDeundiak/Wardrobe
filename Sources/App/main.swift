@@ -33,6 +33,8 @@ guard let clientID = drop.config["app", "facebookClientID"]?.string,
     throw Abort.custom(status: Status.notFound, message: "Fb credentials not found error")
 }
 
+print("ClientId: \(clientID) ClientSecret \(clientSecret)")
+
 SharedFB.initialize(fb: FB(drop: drop, clientId: clientID, clientSecret: clientSecret))
 
 let fb = SharedFB.fb
