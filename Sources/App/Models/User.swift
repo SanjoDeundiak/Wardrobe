@@ -26,7 +26,7 @@ final class User: Model {
     
     var exists: Bool = false
     
-    init(credentials: FacebookAccount) {
+    init(credentials: FBAccount) {
         // FIXME
         self.id = UUID().uuidString.makeNode()
         self.fbId = credentials.uniqueID
@@ -72,11 +72,11 @@ extension User: Auth.User {
             throw Abort.badRequest
             
         case let credentials as AccessToken:
-            let account = try SharedFB.fb.authenticate(credentials: credentials)
+            let account = try SharedFB.fb.authenticate(credentials: credentials.string)
             return try self.authenticate(credentials: account)
             
         // For the first login during session
-        case let credentials as FacebookAccount:
+        case let credentials as FBAccount:
             if case let user?? = try? User.query().filter(User.Keys.facebookId.rawValue, credentials.uniqueID).first() {
                 _ = try SharedFB.fb.authenticate(credentials: credentials.accessToken)
                 return user
@@ -94,7 +94,7 @@ extension User: Auth.User {
     
     static func register(credentials: Credentials) throws -> Auth.User {
         switch credentials {
-        case let credentials as FacebookAccount:
+        case let credentials as FBAccount:
             var user = User(credentials: credentials)
             
             do {
