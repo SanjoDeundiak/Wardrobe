@@ -35,6 +35,7 @@ class FB {
         }
         
         guard let responseData = json["data"].extract() else {
+            print(json.string ?? "No Json")
             throw Abort.custom(status: .internalServerError, message: "Invalid json fb response")
         }
         
