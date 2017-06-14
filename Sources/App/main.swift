@@ -23,7 +23,6 @@ User.database = db
 WardrobeItem.database = db
 Look.database = db
 
-
 // add authentication
 drop.middleware.append(AuthMiddleware<User>())
 
@@ -33,7 +32,7 @@ guard let clientID = drop.config["app", "facebookClientID"]?.string,
     throw Abort.custom(status: Status.notFound, message: "Fb credentials not found error")
 }
 
-SharedFB.initialize(fb: FB(drop: drop, clientId: clientID, clientSecret: clientSecret))
+SharedFB.initialize(fb: Facebook(clientID: clientID, clientSecret: clientSecret))
 
 let fb = SharedFB.fb
 
