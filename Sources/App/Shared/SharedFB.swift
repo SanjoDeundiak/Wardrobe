@@ -30,6 +30,9 @@ class FB {
         let str = "https://graph.facebook.com/debug_token?input_token=\(credentials)&access_token=\(self.clientId)%7C\(self.clientSecret)"
         let response = try self.drop.client.get(str, headers: ["Accept": "application/json"], query: [:], body: "")
         
+        print(str)
+        print(response.status.statusCode)
+        
         guard let json = response.json else {
             throw Abort.custom(status: .internalServerError, message: "No fb response")
         }
