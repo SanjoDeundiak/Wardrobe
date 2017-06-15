@@ -77,7 +77,8 @@ drop.post("users", User.self, "wardrobe") { request, user in
     
     guard let itemTypeStr = request.json?["item_type"]?.string,
         let itemType = ItemType(rawValue: itemTypeStr),
-        let color = request.json?["color"]?.string else {
+        let colorStr = request.json?["color"]?.string,
+        let color = Color(rawValue: colorStr) else {
             throw Abort.badRequest
     }
     

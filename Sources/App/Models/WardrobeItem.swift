@@ -22,11 +22,11 @@ final class WardrobeItem: Model {
     var id: Node?
     var userId: Node
     var itemType: ItemType
-    var color: String
+    var color: Color
     
     var exists: Bool = false
     
-    init(userId: Node, itemType: ItemType, color: String) {
+    init(userId: Node, itemType: ItemType, color: Color) {
         // FIXME
         self.id = UUID().uuidString.makeNode()
         self.userId = userId
@@ -43,7 +43,12 @@ final class WardrobeItem: Model {
         }
         
         self.itemType = itemType
-        self.color = try node.extract(Keys.color.rawValue)
+        guard let colorStr: String = try node.extract(Keys.color.rawValue),
+            let color = Color(rawValue: colorStr) else {
+            throw Abort.serverError
+        }
+        
+        self.color = color
     }
     
     func makeNode(context: Context) throws -> Node {
@@ -52,7 +57,7 @@ final class WardrobeItem: Model {
             Keys.userId.rawValue: self.userId,
             Keys.itemType.rawValue: self.itemType.rawValue,
             Keys.category.rawValue: self.itemType.category.rawValue,
-            Keys.color.rawValue: self.color
+            Keys.color.rawValue: self.color.rawValue
             ])
     }
     
